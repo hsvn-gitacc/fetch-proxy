@@ -1,0 +1,16 @@
+# Render Blueprint for the fetch proxy (free tier).
+# On Render: New -> Blueprint -> connect the repo containing this folder.
+# Render reads this file, creates a free web service from the Dockerfile,
+# and asks for PROXY_TOKEN at deploy time (sync: false = never stored here).
+services:
+  - type: web
+    name: fetch-proxy
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: PROXY_TOKEN
+        sync: false
+      - key: FETCH_TIMEOUT
+        value: "20"
